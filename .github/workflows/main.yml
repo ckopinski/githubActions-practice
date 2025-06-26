@@ -1,0 +1,5 @@
+name: Branch-Based Conditional
+
+on: 
+  push:
+    branches: release
