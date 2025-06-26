@@ -19,7 +19,7 @@ jobs:
 
       - name: pull request check
         if: github.event_name == 'pull_request'
-        run: echo '${{github.event.pull_request.title}} github.event.pull_request.user.name}}'
+        run: echo '${{github.event.pull_request.title}} ${{github.event.pull_request.user.name}}'
 
       - name: Commit message trigger
         if: github.event_name == 'push' && contains(github.event.head_commit.message, 'run-tests')
