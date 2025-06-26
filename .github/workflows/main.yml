@@ -1,5 +1,30 @@
-name: Branch-Based Conditional
+name: Conditional Workflows
 
 on: 
   push:
-    branches: release
+  pull_request:
+    
+
+jobs:
+  conditional-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Branch-based conditional
+        if: github.ref == 'refs/heads/release'
+        run: echo 'running release branch build'
+
+      - name: pull request check
+        if: github.event_name == 'pull_request'
+        run: echo '${{github.event.pull_request.title}} github.event.pull_request.user.name}}'
+
+      - name: Commit message trigger
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, 'run-tests')
+        run: echo 'git commit contained run-tests'
+
+      - name: Repository owner verification
+        if: github.actor == github.repository_owner
+        run: echo 'event by owner ${{ github.actor }}'
